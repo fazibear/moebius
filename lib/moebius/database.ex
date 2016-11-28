@@ -233,7 +233,7 @@ defmodule Moebius.Database do
 
 
   def execute(cmd) do
-    case Postgrex.query(cmd.conn, cmd.sql, cmd.params) do
+    case Postgrex.query(cmd.conn, cmd.sql, cmd.params, Moebius.get_connection) do
       {:ok, result} -> {:ok, result}
       {:error, err} -> {:error, err.postgres.message}
     end
@@ -245,11 +245,9 @@ defmodule Moebius.Database do
   it will be caught in `Query.transaction/1` and reported back using `{:error, err}`.
   """
   def execute(cmd, %DBConnection{} = conn) do
-    case Postgrex.query(conn, cmd.sql, cmd.params) do
+    case Postgrex.query(conn, cmd.sql, cmd.params, Moebius.get_connection) do
       {:ok, result} -> {:ok, result}
       {:error, err} -> Postgrex.query(conn, "ROLLBACK", []) && raise err.postgres.message
     end
   end
-
-
 end
