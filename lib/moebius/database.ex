@@ -106,7 +106,7 @@ defmodule Moebius.Database do
 
       def transaction(fun) do
         try do
-          {:ok, conn} = Postgrex.transaction(@name, fun)
+          {:ok, conn} = Postgrex.transaction(@name, fun, Moebius.get_connection)
           conn
         catch
           e, %{message: message} -> {:error, message}
