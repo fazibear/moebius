@@ -258,8 +258,8 @@ defmodule Moebius.Query do
     concat_list = Enum.map_join(columns, ", ' ',  ", &"#{&1}")
     sql = """
     select *, ts_rank_cd(to_tsvector(concat(#{concat_list})),to_tsquery($1)) as rank from #{cmd.table_name}
-  	where to_tsvector(concat(#{concat_list})) @@ to_tsquery($1)
-  	order by rank desc
+    where to_tsvector(concat(#{concat_list})) @@ to_tsquery($1)
+    order by rank desc
     """
 
     %{cmd | sql: sql, params: [term]}
@@ -367,7 +367,8 @@ defmodule Moebius.Query do
 
     params = cond do
       length(cmd.params) > 0 && length(vals) > 0 ->
-        List.flatten(vals,cmd.params)
+        # List.flatten(vals,cmd.params)
+        vals ++ cmd.params
       length(vals) > 0 -> vals
     end
 
