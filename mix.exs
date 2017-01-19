@@ -8,7 +8,7 @@ defmodule Moebius.Mixfile do
      description: "A functional approach to data access with Elixir",
      version: @version,
      elixir: "~> 1.1",
-     package: package,
+     package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      # ExDoc
@@ -17,7 +17,7 @@ defmodule Moebius.Mixfile do
             main: Moebius.Query,
             source_url: "https://github.com/robconery/moebius",
             extras: ["README.md"]],
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
@@ -34,7 +34,7 @@ defmodule Moebius.Mixfile do
      {:poolboy, "~> 1.5"},
      {:timex, "~> 2.0"},
      {:inflex, "~> 1.5.0"},
-     {:poison, "~> 3.1.0", optional: true},
+     {:poison, "~> 2.0 or ~> 3.0", optional: true},
      {:ex_doc, "~> 0.11.2", only: [:dev, :docs]},
      {:earmark, "~> 0.2.0", only: [:dev, :docs]},
      {:credo, "~> 0.2.5", only: [:dev, :test]}]
